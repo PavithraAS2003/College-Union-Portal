@@ -7,10 +7,14 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <title>College Union LBSITW</title>
-  <!-- Fonts and icons -->
+  <title>
+    College Union Website
+  </title>
+  <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -19,18 +23,75 @@
   <style>
     /* Custom CSS for this page */
     .login-form {
-        position: absolute;
-        top: 50%;
-        right: 5%; /* Adjust the right position */
-        transform: translate(0%, -50%);
-        background-color: rgba(255, 192, 203, 0.5); /* Pink background color with reduced opacity */
-        padding: 20px; /* Added padding to the form */
-        max-width: 400px; /* Set maximum width for the form */
-        width: 100%; /* Set width to 100% */
-        border-radius: 10px;
+      position: absolute;
+      top: 200px;
+      left: 738px;
+      background-color: rgba(255, 247, 255, 0.8);
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+      border-radius: 10px;
+      font-weight: bold; /* Make text bold */
+    }
 
-}
+    .welcome-heading {
+      position: absolute;
+      top: 186px;
+      left: 170px;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold; /* Make text bold */
+    }
 
+    .main-heading {
+      position: absolute;
+      top: 220px;
+      left: 170px;
+      color: #fff;
+      font-size: 45px;
+      font-weight: bold; /* Make text bold */
+    }
+    .main-heading1 {
+      position: absolute;
+      top: 270px;
+      left: 170px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold; /* Make text bold */
+    }
+
+    .sub-paragraph {
+      position: absolute;
+      top: 320px;
+      left: 170px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold; /* Make text bold */
+      width: 325px;
+    }
+
+    /* Adjustments for About Us section */
+    .about-us-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .about-us-heading {
+      font-size: 50px;
+      font-weight: bold;
+    }
+
+    .about-us-content {
+      max-width: 600px; /* Adjust width if needed */
+      font-size: 16px;
+    }
+
+    /* Union Initiatives */
+    .carousel-item img {
+      max-height: 300px;
+      object-fit: cover;
+    }
   </style>
 </head>
 
@@ -72,9 +133,16 @@
     </nav>
     <!-- End Navbar -->
 
+    <!-- Welcome message -->
+    <div class="welcome-heading">Welcome to</div>
+    <div class="main-heading">LBSITW College Union</div>
+    <div class="main-heading1">Web Portal</div>
+    <div class="sub-paragraph">
+      <p>This is the official web portal of the College Union at LBS Institute of Technology for Women.</p>
+    </div>
     <!-- Image of college union members -->
-    <div class="container-fluid">
-      <img src="../assets/img/lbs.jpg" alt="College Union Members" class="img-fluid" style="width: 100%; opacity: 0.9;">
+    <div class="container-fluid" style="position: relative;">
+      <img src="../assets/img/lbs.jpg" alt="College Union Members" class="img-fluid" style="width: 100%; opacity: 0.4;">
     </div>
 
     <!-- Login form for union members -->
@@ -92,23 +160,88 @@
       </form>
     </div>
 
-    <!-- Welcome message -->
-    <div class="container-fluid text-center mt-5">
-      <h1>Welcome to College Union LBSITW</h1>
-    </div>
-
     <!-- About Us -->
     <div class="container mt-5">
-      <h2>About Us</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat neque id nunc consequat, nec luctus purus lobortis. Nulla facilisi. Duis et mattis sapien. Nulla sit amet rhoncus justo. Donec congue vestibulum est, nec dictum est rhoncus
-        ac.</p>
+      <div class="about-us-container">
+        <div class="about-us-heading">About Us</div>
+        <div class="about-us-content">
+          <p>
+            Welcome to the College Union of LBS Institute of Technology for Women (LBSITW)! We're dedicated to cultivating a vibrant campus community by fostering student engagement, leadership development, and holistic growth. Through diverse events, initiatives, and advocacy efforts, we aim to create a sense of belonging and pride among students while enhancing their educational experience. Join us in making a positive impact and leaving a lasting legacy at LBSITW!</p>
+        </div>
+      </div>
     </div>
 
     <!-- Union Initiatives (Slider) -->
     <div class="container mt-5">
-      <h2>Union Initiatives</h2>
-      <!-- Add your slider here -->
-      <!-- Each slide could contain an image and content in card format -->
+      <h2 class="text-center mb-4">Union Initiatives</h2>
+      <div id="initiativesCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card">
+                  <img src="../assets/img/1.jpg" class="card-img-top" alt="Initiative 1">
+                  <div class="card-body">
+                    <p class="card-text">Description of Initiative 1.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card">
+                  <img src="../assets/img/2.jpg" class="card-img-top" alt="Initiative 2">
+                  <div class="card-body">
+                    <p class="card-text">Description of Initiative 2.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card">
+                  <img src="../assets/img/3.jpg" class="card-img-top" alt="Initiative 3">
+                  <div class="card-body">
+                    <p class="card-text">Description of Initiative 3.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card">
+                  <img src="../assets/img/4.jpeg" class="card-img-top" alt="Initiative 4">
+                  <div class="card-body">
+                    <p class="card-text">Description of Initiative 4.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card">
+                  <img src="../assets/img/5.jpeg" class="card-img-top" alt="Initiative 5">
+                  <div class="card-body">
+                    <p class="card-text">Description of Initiative 5.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card">
+                  <img src="../assets/img/6.png" class="card-img-top" alt="Initiative 6">
+                  <div class="card-body">
+                    <p class="card-text">Description of Initiative 6.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#initiativesCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#initiativesCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
 
     <!-- Meet the Union -->
@@ -145,6 +278,7 @@
 
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <!--  Notifications Plugin    -->
