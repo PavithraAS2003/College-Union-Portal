@@ -1,3 +1,55 @@
+<?php
+include 'connect.php';
+// Fetch lost items from the database
+// Fetch lost items from the database
+$lost_items_query = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE item_type = 'lost'";
+$lost_items_result = mysqli_query($con, $lost_items_query);
+$lost_items = mysqli_fetch_all($lost_items_result, MYSQLI_ASSOC);
+
+// Fetch found items from the database
+$found_items_query = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE item_type = 'found'";
+$found_items_result = mysqli_query($con, $found_items_query);
+$found_items = mysqli_fetch_all($found_items_result, MYSQLI_ASSOC);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Process form data when form is submitted
+    $itemName = $_POST['itemName'];
+    $description = $_POST['description'];
+    $itemType = $_POST['itemType'];
+    $question = $_POST['question'];
+    $image = $_FILES['imageInput']['name'];
+
+    // File upload path
+    $targetDir = "uploads/";
+    $targetFilePath = $targetDir . basename($image);
+    $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+    // Allow certain file formats
+    $allowTypes = array('jpg','png','jpeg','gif');
+    if (in_array($fileType, $allowTypes)) {
+        // Upload file to server
+        if (move_uploaded_file($_FILES["imageInput"]["tmp_name"], $targetFilePath)) {
+            // Insert item details into database
+            $sql = "INSERT INTO lost_and_found (item_name, description, item_type, question, image_url) VALUES ('$itemName', '$description', '$itemType', '$question', '$targetFilePath')";
+
+            if (mysqli_query($con, $sql)) {
+                echo "Item posted successfully.";
+                header("Location: ".$_SERVER['PHP_SELF']);
+                exit();
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($con);
+            }
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    } else {
+        echo "Sorry, only JPG, JPEG, PNG, GIF files are allowed.";
+    }
+} else {
+    // Redirect back to the form page
+    
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -169,11 +221,56 @@
             </div>
             <!-- Card with headings -->
             <div class="card">
-              <div class="card-header">
-                <h5 class="title">Lost Item</h5>
-                <h5 class="title">Found Item</h5>
+        <div class="card-header">
+          <h5 class="title">Lost Items</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <?php foreach ($lost_items as $lost_item) : ?>
+              <div class="col-md-4 mb-4">
+                <div class="card">
+                  <?php if (!empty($lost_item['image_url'])) : ?>
+                    <img src="<?php echo $lost_item['image_url']; ?>" class="card-img-top" style="width: 100%;">
+                  <?php endif; ?>
+                  <div class="card-body">
+                    <h5 class="card-title"><?php echo $lost_item['item_name']; ?></h5>
+                    <p class="card-text">Description: <?php echo $lost_item['description']; ?></p>
+                    <?php if (!empty($lost_item['question'])) : ?>
+                      <p class="card-text">Question: <?php echo $lost_item['question']; ?></p>
+                    <?php endif; ?>
+                  </div>
+                </div>
               </div>
-              <div class="card-body">
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </div>
+      <!-- Found Items -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Found Items</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <?php foreach ($found_items as $found_item) : ?>
+              <div class="col-md-4 mb-4">
+                <div class="card">
+                  <?php if (!empty($found_item['image_url'])) : ?>
+                    <img src="<?php echo $found_item['image_url']; ?>" class="card-img-top" style="width: 100%;">
+                  <?php endif; ?>
+                  <div class="card-body">
+                    <h5 class="card-title"><?php echo $found_item['item_name']; ?></h5>
+                    <p class="card-text">Description: <?php echo $found_item['description']; ?></p>
+                    <?php if (!empty($found_item['question'])) : ?>
+                      <p class="card-text">Question: <?php echo $found_item['question']; ?></p>
+                    <?php endif; ?>
+                  </div>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </div>
 
 
                 <!-- Content of the card goes here -->
@@ -188,7 +285,7 @@
                       </div>
                       <div class="modal-body">
                         <!-- Form for posting a new item -->
-                        <form id="postItemForm">
+                        <form id="postItemForm" method="post" action="lostandfound.php" enctype="multipart/form-data">
                           <div class="form-group">
                             <label for="itemName" style="color: black;">Item Name</label>
                             <input type="text" style="color: black;" class="form-control" id="itemName" name="itemName" required>
@@ -448,24 +545,22 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script>
-    function redirectToMyListings() {
-        window.location.href = "mylistings.php";
-    }
-</script>
-<script>
-  function redirectToHome() {
-      window.location.href = "./lostandfound.php";
-  }
-</script>
-<script>
-  function redirectToResponses() {
-    window.location.href = "responses.php";
-  }
+        function redirectToMyListings() {
+            window.location.href = "mylistings.php";
+        }
 
-  function redirectToFeed() {
-    window.location.href = "feed.php";
-  }
-</script>
+        function redirectToHome() {
+            window.location.href = "./lostandfound.php";
+        }
+
+        function redirectToResponses() {
+            window.location.href = "responses.php";
+        }
+
+        function redirectToFeed() {
+            window.location.href = "feed.php";
+        }
+    </script>
 </body>
 
 </html>
