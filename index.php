@@ -100,40 +100,40 @@
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-transparent">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img src="assets/img/logo.png" alt="College Union Logo" width="auto" height="90">
-          <span class="d-inline-block">College Union LBSITW</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Union Initiatives</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Meet the Union</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link btn btn-primary" href="signup.php">Sign Up</a>
-            </li>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="assets/img/logo.png" alt="College Union Logo" width="auto" height="90">
+      <span class="d-inline-block">College Union LBSITW</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#initiatives">Union Initiatives</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#union">Meet the Union</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary" href="signup.php">Sign Up</a>
+        </li>
 
-            <!-- Sign In button -->
-            <li class="nav-item">
-                <a class="nav-link btn btn-primary" href="signin.php">Sign In</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+        <!-- Sign In button -->
+        <li class="nav-item">
+            <a class="nav-link btn btn-primary" href="signin.php">Sign In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
     <!-- End Navbar -->
 
     <!-- Welcome message -->
@@ -165,7 +165,7 @@
 
     <!-- About Us -->
     <div class="container mt-5">
-      <div class="about-us-container">
+      <div class="about-us-container" id="about">
         <div class="about-us-heading">About Us</div>
         <div class="about-us-content">
           <p>
@@ -175,7 +175,7 @@
     </div>
 
     <!-- Union Initiatives (Slider) -->
-    <div class="container mt-5">
+    <div class="container mt-5" id="initiatives">
       <h2 class="text-center mb-4">Union Initiatives</h2>
       <div id="initiativesCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -248,12 +248,12 @@
     </div>
 
     <!-- Meet the Union -->
-    <div class="container mt-5">
+    <div class="container mt-5" id="union">
       <h2>Meet the Union</h2>
-      <!-- Add cards for each union member here -->
-      <!-- Each card could contain a picture of the member and some information -->
+      <!-- Add the image here -->
+      <img src=".\assets\img\union.jpg" alt="Union Members" class="img-fluid">
+  <!-- Add any additional content or cards for each union member below the image -->
     </div>
-
     <!-- Footer -->
     <footer class="footer">
       <div class="container-fluid">
