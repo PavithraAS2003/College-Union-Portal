@@ -250,10 +250,10 @@
     <!-- Meet the Union -->
     <div class="container mt-5" id="union">
       <h2>Meet the Union</h2>
-      <!-- Add cards for each union member here -->
-      <!-- Each card could contain a picture of the member and some information -->
+      <!-- Add the image here -->
+      <img src=".\assets\img\union.jpg" alt="Union Members" class="img-fluid">
+  <!-- Add any additional content or cards for each union member below the image -->
     </div>
-
     <!-- Footer -->
     <footer class="footer">
       <div class="container-fluid">
