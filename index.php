@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <title>
     College Union Website
@@ -14,11 +14,12 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+  <link href="assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <link href="assets/demo/demo.css" rel="stylesheet" />
 
   <style>
     /* Custom CSS for this page */
@@ -101,7 +102,7 @@
     <nav class="navbar navbar-expand-lg navbar-transparent">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="../assets/img/logo.png" alt="College Union Logo" width="auto" height="90">
+          <img src="assets/img/logo.png" alt="College Union Logo" width="auto" height="90">
           <span class="d-inline-block">College Union LBSITW</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,10 +123,12 @@
               <a class="nav-link" href="#">Meet the Union</a>
             </li>
             <li class="nav-item">
-              <button class="btn btn-primary nav-link">Sign In</button>
+              <a class="nav-link btn btn-primary" href="signup.php">Sign Up</a>
             </li>
+
+            <!-- Sign In button -->
             <li class="nav-item">
-              <button class="btn btn-success nav-link">Sign Up</button>
+                <a class="nav-link btn btn-primary" href="signin.php">Sign In</a>
             </li>
           </ul>
         </div>
@@ -142,7 +145,7 @@
     </div>
     <!-- Image of college union members -->
     <div class="container-fluid" style="position: relative;">
-      <img src="../assets/img/lbs.jpg" alt="College Union Members" class="img-fluid" style="width: 100%; opacity: 0.4;">
+      <img src="assets/img/lbs.jpg" alt="College Union Members" class="img-fluid" style="width: 100%; opacity: 0.4;">
     </div>
 
     <!-- Login form for union members -->
@@ -180,25 +183,25 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="card">
-                  <img src="../assets/img/1.jpg" class="card-img-top" alt="Initiative 1">
+                  <img src="assets/img/1.jpg" class="card-img-top" alt="Initiative 1">
                   <div class="card-body">
-                    <p class="card-text">Description of Initiative 1.</p>
+                    <p class="card-text">Wesat</p>
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="card">
-                  <img src="../assets/img/2.jpg" class="card-img-top" alt="Initiative 2">
+                  <img src="assets/img/2.jpg" class="card-img-top" alt="Initiative 2">
                   <div class="card-body">
-                    <p class="card-text">Description of Initiative 2.</p>
+                    <p class="card-text">union meet</p>
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="card">
-                  <img src="../assets/img/3.jpg" class="card-img-top" alt="Initiative 3">
+                  <img src="assets/img/3.jpg" class="card-img-top" alt="Initiative 3">
                   <div class="card-body">
-                    <p class="card-text">Description of Initiative 3.</p>
+                    <p class="card-text">Shoba</p>
                   </div>
                 </div>
               </div>
@@ -208,25 +211,25 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="card">
-                  <img src="../assets/img/4.jpeg" class="card-img-top" alt="Initiative 4">
+                  <img src="assets/img/4.jpeg" class="card-img-top" alt="Initiative 4">
                   <div class="card-body">
-                    <p class="card-text">Description of Initiative 4.</p>
+                    <p class="card-text">Holi.</p>
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="card">
-                  <img src="../assets/img/5.jpeg" class="card-img-top" alt="Initiative 5">
+                  <img src="assets/img/5.jpeg" class="card-img-top" alt="Initiative 5">
                   <div class="card-body">
-                    <p class="card-text">Description of Initiative 5.</p>
+                    <p class="card-text">YD</p>
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="card">
-                  <img src="../assets/img/6.png" class="card-img-top" alt="Initiative 6">
+                  <img src="assets/img/6.png" class="card-img-top" alt="Initiative 6">
                   <div class="card-body">
-                    <p class="card-text">Description of Initiative 6.</p>
+                    <p class="card-text">Proshow</p>
                   </div>
                 </div>
               </div>
@@ -277,16 +280,16 @@
   </div>
 
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="assets/js/core/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
   <!--  Notifications Plugin    -->
-  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/black-dashboard.min.js?v=1.0.0"></script>
+  <script src="assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../assets/demo/demo.js"></script>
+  <script src="assets/demo/demo.js"></script>
 </body>
 
 </html>
