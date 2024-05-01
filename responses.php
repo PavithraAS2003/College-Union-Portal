@@ -1,3 +1,34 @@
+<?php
+include 'connect.php';
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page or handle unauthorized access
+    header("Location: login.php");
+    exit();
+}
+
+// Get the current user's ID
+$userId = $_SESSION['user_id'];
+
+// Fetch 'found' items posted by the current user
+$foundItemsQuery = "SELECT lf.id, lf.item_name, lf.description, lf.question, lf.answer, lf.status, u.phone
+                    FROM lost_and_found lf
+                    JOIN users u ON lf.claimed_by = u.id
+                    WHERE lf.user_id = $userId AND lf.item_type = 'found'";
+$foundItemsResult = mysqli_query($con, $foundItemsQuery);
+
+// Check if the query was successful
+if ($foundItemsResult) {
+    $foundItems = mysqli_fetch_all($foundItemsResult, MYSQLI_ASSOC);
+} else {
+    // Handle query error
+    echo "Error executing the query: " . mysqli_error($con);
+    $foundItems = array(); // Set an empty array for $foundItems
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -156,23 +187,54 @@
       </div>
       <!-- End Navbar -->
       
+
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <!-- Buttons in the right side -->
-            <div class="text-right mb-3">
+          <div class="text-right mb-3">
               <button class="btn btn-info" onclick="redirectToHome()">Home</button>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postItemModal">Post Item</button>
               <button class="btn btn-info" id="myListingsButton" onclick="redirectToMyListings()">My Listings</button>
               <button class="btn btn-info" onclick="redirectToResponses()">Responses</button>
-              <button class="btn btn-success" onclick="redirectToFeed()">Feed</button>
+              <!-- <button class="btn btn-success" onclick="redirectToFeed()">Feed</button> -->
             </div>
-            <!-- Card with headings -->
             <div class="card">
               <div class="card-header">
                 <h5 class="title">My Responses</h5>
               </div>
               <div class="card-body">
+                <?php if (!empty($foundItems)) : ?>
+                  <?php foreach ($foundItems as $foundItem) : ?>
+                    <div class="card mb-4">
+                      <div class="card-header">
+                        <h5 class="card-title"><?php echo $foundItem['item_name']; ?></h5>
+                      </div>
+                      <div class="card-body">
+                        <p class="card-text">Description: <?php echo $foundItem['description']; ?></p>
+                        <p class="card-text">Question: <?php echo $foundItem['question']; ?></p>
+                        <p class="card-text">Your Answer: <?php echo $foundItem['answer']; ?></p>
+                        <p class="card-text">Status: <?php echo $foundItem['status']; ?></p>
+                        <?php if ($foundItem['status'] === 'approved') : ?>
+                          <p class="card-text">Contact Information: <?php echo $foundItem['phone']; ?></p>
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                  <?php endforeach; ?>
+                <?php else : ?>
+                  <p>You haven't provided any answers yet.</p>
+                <?php endif; ?>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
 
 
                 <!-- Content of the card goes here -->
@@ -461,9 +523,9 @@
     window.location.href = "responses.php";
   }
 
-  function redirectToFeed() {
-    window.location.href = "feed.php";
-  }
+  // function redirectToFeed() {
+  //   window.location.href = "feed.php";
+  // }
 </script>
 </body>
 

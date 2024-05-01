@@ -1,3 +1,12 @@
+
+<?php
+include 'connect.php';
+
+// Fetch all lost and found items from the database
+$items_query = "SELECT id, item_name, description, question, item_type, image_url, user_id FROM lost_and_found";
+$items_result = mysqli_query($con, $items_query);
+$items = mysqli_fetch_all($items_result, MYSQLI_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -157,88 +166,53 @@
       <!-- End Navbar -->
       
       <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <!-- Buttons in the right side -->
-            <div class="text-right mb-3">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Buttons in the right side -->
+
+        <div class="text-right mb-3">
               <button class="btn btn-info" onclick="redirectToHome()">Home</button>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postItemModal">Post Item</button>
               <button class="btn btn-info" id="myListingsButton" onclick="redirectToMyListings()">My Listings</button>
               <button class="btn btn-info" onclick="redirectToResponses()">Responses</button>
               <button class="btn btn-success" onclick="redirectToFeed()">Feed</button>
             </div>
-            <!-- Card with headings -->
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">Feed</h5>
-              </div>
-              <div class="card-body">
 
+          <!-- Your existing buttons -->
+        </div>
 
-                <!-- Content of the card goes here -->
-                <div class="modal fade" id="postItemModal" tabindex="-1" role="dialog" aria-labelledby="postItemModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="postItemModalLabel">Post Item</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <!-- Form for posting a new item -->
-                        <form id="postItemForm">
-                          <div class="form-group">
-                            <label for="itemName" style="color: black;">Item Name</label>
-                            <input type="text" style="color: black;" class="form-control" id="itemName" name="itemName" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="description" style="color: black;">Description</label>
-                            <input type="text" style="color: black;" class="form-control" id="description" name="description" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="question" style="color: black;" >Enter Question based on Item</label>
-                            <input type="text" style="color: black;" class="form-control" id="question" name="question" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="itemType" style="color: black;" >Item Type</label>
-                            <select class="form-control"style="color: black;"  id="itemType" name="itemType" required>
-                              <option value="lost" style="color: black;" >Lost It</option>
-                              <option value="found" style="color: black;" >Found It</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="imageInput"style="color: black;" >Upload Image</label>
-                            <input type="file" style="color: black;" class="form-control-file" id="imageInput" name="imageInput">
-                          </div>
-                        </form>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" form="postItemForm">Submit</button>
-                      </div>
+        <!-- Card with headings -->
+        <div class="card">
+          <div class="card-header">
+            <h5 class="title">Feed</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <?php foreach ($items as $item) : ?>
+                <div class="col-md-4 mb-4">
+                  <div class="card">
+                    <?php if (!empty($item['image_url'])) : ?>
+                      <img src="<?php echo $item['image_url']; ?>" class="card-img-top" style="width: 100%;">
+                    <?php endif; ?>
+                    <div class="card-body">
+                      <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
+                      <p class="card-text">Description: <?php echo $item['description']; ?></p>
+                      <?php if (!empty($item['question'])) : ?>
+                        <p class="card-text">Question: <?php echo $item['question']; ?></p>
+                      <?php endif; ?>
+                      <?php if ($item['item_type'] == 'lost') : ?>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#claimItemModal" data-item-id="<?php echo $item['id']; ?>">Found It</button>
+                      <?php endif; ?>
                     </div>
                   </div>
-                </div>                
-
-
-              </div>
+                </div>
+              <?php endforeach; ?>
             </div>
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
+    </div>
+  </div>
 
 
       <footer class="footer">

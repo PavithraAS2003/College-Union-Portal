@@ -1,55 +1,68 @@
 <?php
-include 'connect.php';
-// Fetch lost items from the database
-// Fetch lost items from the database
-$lost_items_query = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE item_type = 'lost'";
-$lost_items_result = mysqli_query($con, $lost_items_query);
-$lost_items = mysqli_fetch_all($lost_items_result, MYSQLI_ASSOC);
+session_start(); // Start the session
 
-// Fetch found items from the database
-$found_items_query = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE item_type = 'found'";
-$found_items_result = mysqli_query($con, $found_items_query);
-$found_items = mysqli_fetch_all($found_items_result, MYSQLI_ASSOC);
+// Check if the session variable is set
+if(isset($_SESSION['user_id'])) {
+    // Include the database connection file
+    include 'connect.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Process form data when form is submitted
-    $itemName = $_POST['itemName'];
-    $description = $_POST['description'];
-    $itemType = $_POST['itemType'];
-    $question = $_POST['question'];
-    $image = $_FILES['imageInput']['name'];
+    // Fetch lost items from the database
+    $lost_items_query = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE item_type = 'lost'";
+    $lost_items_result = mysqli_query($con, $lost_items_query);
+    $lost_items = mysqli_fetch_all($lost_items_result, MYSQLI_ASSOC);
 
-    // File upload path
-    $targetDir = "uploads/";
-    $targetFilePath = $targetDir . basename($image);
-    $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+    // Fetch found items from the database
+    $found_items_query = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE item_type = 'found'";
+    $found_items_result = mysqli_query($con, $found_items_query);
+    $found_items = mysqli_fetch_all($found_items_result, MYSQLI_ASSOC);
 
-    // Allow certain file formats
-    $allowTypes = array('jpg','png','jpeg','gif');
-    if (in_array($fileType, $allowTypes)) {
-        // Upload file to server
-        if (move_uploaded_file($_FILES["imageInput"]["tmp_name"], $targetFilePath)) {
-            // Insert item details into database
-            $sql = "INSERT INTO lost_and_found (item_name, description, item_type, question, image_url) VALUES ('$itemName', '$description', '$itemType', '$question', '$targetFilePath')";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Process form data when form is submitted
+        $itemName = $_POST['itemName'];
+        $description = $_POST['description'];
+        $itemType = $_POST['itemType'];
+        $question = $_POST['question'];
+        $image = $_FILES['imageInput']['name'];
+        $userId = $_SESSION['user_id']; // Get the user ID from the session
 
-            if (mysqli_query($con, $sql)) {
-                echo "Item posted successfully.";
-                header("Location: ".$_SERVER['PHP_SELF']);
-                exit();
+        // File upload path
+        $targetDir = "uploads/";
+        $targetFilePath = $targetDir . basename($image);
+        $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+        // Allow certain file formats
+        $allowTypes = array('jpg','png','jpeg','gif');
+        if (in_array($fileType, $allowTypes)) {
+            // Upload file to server
+            if (move_uploaded_file($_FILES["imageInput"]["tmp_name"], $targetFilePath)) {
+                // Insert item details into database along with user_id
+                $sql = "INSERT INTO lost_and_found (user_id, item_name, description, item_type, question, image_url) VALUES ('$userId', '$itemName', '$description', '$itemType', '$question', '$targetFilePath')";
+
+                if (mysqli_query($con, $sql)) {
+                    echo "Item posted successfully.";
+                    header("Location: ".$_SERVER['PHP_SELF']);
+                    exit();
+                } else {
+                    echo "Error: " . $sql . "<br>" . mysqli_error($con);
+                }
             } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($con);
+                echo "Sorry, there was an error uploading your file.";
             }
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            echo "Sorry, only JPG, JPEG, PNG, GIF files are allowed.";
         }
-    } else {
-        echo "Sorry, only JPG, JPEG, PNG, GIF files are allowed.";
     }
+
+    // Close the database connection
+    mysqli_close($con);
 } else {
-    // Redirect back to the form page
-    
+    // If user is not logged in, redirect to the sign-in page
+    header("Location: signin.php");
+    exit();
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -217,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postItemModal">Post Item</button>
               <button class="btn btn-info" id="myListingsButton" onclick="redirectToMyListings()">My Listings</button>
               <button class="btn btn-info" onclick="redirectToResponses()">Responses</button>
-              <button class="btn btn-success" onclick="redirectToFeed()">Feed</button>
+              <!-- <button class="btn btn-success" onclick="redirectToFeed()">Feed</button> -->
             </div>
             <!-- Card with headings -->
             <div class="card">
@@ -229,16 +242,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php foreach ($lost_items as $lost_item) : ?>
               <div class="col-md-4 mb-4">
                 <div class="card">
-                  <?php if (!empty($lost_item['image_url'])) : ?>
-                    <img src="<?php echo $lost_item['image_url']; ?>" class="card-img-top" style="width: 100%;">
-                  <?php endif; ?>
-                  <div class="card-body">
-                    <h5 class="card-title"><?php echo $lost_item['item_name']; ?></h5>
-                    <p class="card-text">Description: <?php echo $lost_item['description']; ?></p>
-                    <?php if (!empty($lost_item['question'])) : ?>
-                      <p class="card-text">Question: <?php echo $lost_item['question']; ?></p>
-                    <?php endif; ?>
-                  </div>
+                <?php if (!empty($lost_item['image_url'])) : ?>
+                          <img src="<?php echo $lost_item['image_url']; ?>" class="card-img-top" style="width: 100%;">
+                      <?php endif; ?>
+                      <div class="card-body">
+                          <h5 class="card-title"><?php echo $lost_item['item_name']; ?></h5>
+                          <p class="card-text">Description: <?php echo $lost_item['description']; ?></p>
+                          <?php if (!empty($lost_item['question'])) : ?>
+                              <p class="card-text">Question: <?php echo $lost_item['question']; ?></p>
+                          <?php endif; ?>
+                          <?php if ($lost_item['item_type'] == 'lost') : ?>
+                              <button class="btn btn-primary" data-toggle="modal" data-target="#claimItemModal" data-item-id="<?php echo $lost_item['id']; ?>">Found It</button>
+                          <?php endif; ?>
+                          <a href="item_details.php?id=<?php echo $lostItem['id']; ?>" class="btn btn-primary btn-sm">More Details</a>
+                      </div>
+
                 </div>
               </div>
             <?php endforeach; ?>
@@ -255,16 +273,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php foreach ($found_items as $found_item) : ?>
               <div class="col-md-4 mb-4">
                 <div class="card">
-                  <?php if (!empty($found_item['image_url'])) : ?>
-                    <img src="<?php echo $found_item['image_url']; ?>" class="card-img-top" style="width: 100%;">
-                  <?php endif; ?>
-                  <div class="card-body">
-                    <h5 class="card-title"><?php echo $found_item['item_name']; ?></h5>
-                    <p class="card-text">Description: <?php echo $found_item['description']; ?></p>
-                    <?php if (!empty($found_item['question'])) : ?>
-                      <p class="card-text">Question: <?php echo $found_item['question']; ?></p>
-                    <?php endif; ?>
-                  </div>
+                <?php if (!empty($found_item['image_url'])) : ?>
+                          <img src="<?php echo $found_item['image_url']; ?>" class="card-img-top" style="width: 100%;">
+                      <?php endif; ?>
+                      <div class="card-body">
+                          <h5 class="card-title"><?php echo $found_item['item_name']; ?></h5>
+                          <p class="card-text">Description: <?php echo $found_item['description']; ?></p>
+                          <?php if (!empty($found_item['question'])) : ?>
+                              <p class="card-text">Question: <?php echo $found_item['question']; ?></p>
+                          <?php endif; ?>
+                          <?php if ($found_item['item_type'] == 'lost') : ?>
+                              <button class="btn btn-primary" data-toggle="modal" data-target="#claimItemModal" data-item-id="<?php echo $found_item['id']; ?>">Found It</button>
+                          <?php endif; ?>
+                          
+                      </div>
                 </div>
               </div>
             <?php endforeach; ?>
@@ -272,7 +294,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
       </div>
 
-
+      <div class="modal fade" id="claimItemModal" tabindex="-1" role="dialog" aria-labelledby="claimItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="claimItemModalLabel">Claim Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="claimItemForm" method="post" action="claim_item.php">
+                <div class="modal-body">
+                    <input type="hidden"  id="itemId" name="itemId" value="">
+                    <p id="itemQuestion"></p>
+                    <div class="form-group">
+                        <label for="answer">Your Answer</label>
+                        <input type="text" style="color: black;"class="form-control" id="answer" name="answer" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Answer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
                 <!-- Content of the card goes here -->
                 <div class="modal fade" id="postItemModal" tabindex="-1" role="dialog" aria-labelledby="postItemModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -557,10 +604,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             window.location.href = "responses.php";
         }
 
-        function redirectToFeed() {
-            window.location.href = "feed.php";
-        }
+        // function redirectToFeed() {
+        //     window.location.href = "feed.php";
+        // }
     </script>
+    <script>
+$(document).ready(function() {
+    $('#claimItemModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var itemId = button.data('item-id'); // Get the item ID from the data-item-id attribute
+        var modal = $(this);
+        
+        // Fetch the item question from the server using AJAX or fetch the question from the markup
+        var question = button.closest('.card').find('.card-text:contains("Question:")').text().replace('Question: ', '');
+        
+        modal.find('#itemId').val(itemId);
+        modal.find('#itemQuestion').text(question);
+    });
+});
+</script>
 </body>
 
 </html>

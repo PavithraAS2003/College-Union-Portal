@@ -1,3 +1,33 @@
+<?php
+include 'connect.php';
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page or handle as appropriate
+    header("Location: signin.php");
+    exit(); // Stop further execution
+}
+
+// Get the current user's ID
+$userId = $_SESSION['user_id'];
+
+// Fetch lost items posted by the current user
+$lostItemsQuery = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE user_id = $userId AND item_type = 'lost'";
+$lostItemsResult = mysqli_query($con, $lostItemsQuery);
+
+// Check if any items were found
+if (mysqli_num_rows($lostItemsResult) > 0) {
+    // Fetch the data
+    $lostItems = mysqli_fetch_all($lostItemsResult, MYSQLI_ASSOC);
+} else {
+    // No items found for the current user
+    $lostItems = [];
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -157,79 +187,76 @@
       <!-- End Navbar -->
       
       <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <!-- Buttons in the right side -->
-            <div class="text-right mb-3">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Buttons in the right side -->
+        <div class="text-right mb-3">
               <button class="btn btn-info" onclick="redirectToHome()">Home</button>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postItemModal">Post Item</button>
               <button class="btn btn-info" id="myListingsButton" onclick="redirectToMyListings()">My Listings</button>
               <button class="btn btn-info" onclick="redirectToResponses()">Responses</button>
-              <button class="btn btn-success" onclick="redirectToFeed()">Feed</button>
-            </div>
-            <!-- Card with headings -->
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">My Listings</h5>
+              <!-- <button class="btn btn-success" onclick="redirectToFeed()">Feed</button> -->
+        </div>
+          <!-- Your existing buttons -->
+        </div>
+        <!-- Card with headings -->
+        <div class="card">
+          <div class="card-header">
+            <h5 class="title">My Listings</h5>
+          </div>
+          <div class="card-body">
+            <?php foreach ($lostItems as $lostItem) : ?>
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h5 class="card-title"><?php echo $lostItem['item_name']; ?></h5>
+                </div>
+                <div class="card-body">
+                  <?php if (!empty($lostItem['image_url'])) : ?>
+                    <img src="<?php echo $lostItem['image_url']; ?>" class="img-fluid mb-3" style="max-width: 300px;">
+                  <?php endif; ?>
+                  <p class="card-text">Description: <?php echo $lostItem['description']; ?></p>
+                  <p class="card-text">Question: <?php echo $lostItem['question']; ?></p>
+
+                  <!-- Fetch associated 'found' items (answers) -->
+                  <?php
+                  $foundItemsQuery = "SELECT id, answer, status, user_id FROM lost_and_found WHERE item_type = 'found' AND question = '" . $lostItem['question'] . "'";
+                  $foundItemsResult = mysqli_query($con, $foundItemsQuery);
+                  $foundItems = mysqli_fetch_all($foundItemsResult, MYSQLI_ASSOC);
+                  ?>
+
+                  <?php if (!empty($foundItems)) : ?>
+                    <h6 class="mt-3">Answers:</h6>
+                    <ul class="list-group">
+                      <?php foreach ($foundItems as $foundItem) : ?>
+                        <li class="list-group-item">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <p class="mb-0" style="color: black;">Answer: <?php echo $foundItem['answer']; ?></p>
+                              <small>Submitted by User ID: <?php echo $foundItem['user_id']; ?></small>
+                            </div>
+                            <div>
+                              <?php if ($foundItem['status'] === 'pending') : ?>
+                                <a href="update_status.php?id=<?php echo $foundItem['id']; ?>&action=approve" class="btn btn-success btn-sm">Approve</a>
+                                <a href="update_status.php?id=<?php echo $foundItem['id']; ?>&action=reject" class="btn btn-danger btn-sm">Reject</a>
+                              <?php elseif ($foundItem['status'] === 'approved') : ?>
+                                <span class="badge badge-success">Approved</span>
+                              <?php elseif ($foundItem['status'] === 'rejected') : ?>
+                                <span class="badge badge-danger">Rejected</span>
+                              <?php endif; ?>
+                            </div>
+                          </div>
+                        </li>
+                      <?php endforeach; ?>
+                    </ul>
+                  <?php endif; ?>
+                </div>
               </div>
-              <div class="card-body">
-
-
-                <!-- Content of the card goes here -->
-                <div class="modal fade" id="postItemModal" tabindex="-1" role="dialog" aria-labelledby="postItemModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="postItemModalLabel">Post Item</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <!-- Form for posting a new item -->
-                        <form id="postItemForm">
-                          <div class="form-group">
-                            <label for="itemName" style="color: black;">Item Name</label>
-                            <input type="text" style="color: black;" class="form-control" id="itemName" name="itemName" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="description" style="color: black;">Description</label>
-                            <input type="text" style="color: black;" class="form-control" id="description" name="description" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="question" style="color: black;" >Enter Question based on Item</label>
-                            <input type="text" style="color: black;" class="form-control" id="question" name="question" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="itemType" style="color: black;" >Item Type</label>
-                            <select class="form-control"style="color: black;"  id="itemType" name="itemType" required>
-                              <option value="lost" style="color: black;" >Lost It</option>
-                              <option value="found" style="color: black;" >Found It</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="imageInput"style="color: black;" >Upload Image</label>
-                            <input type="file" style="color: black;" class="form-control-file" id="imageInput" name="imageInput">
-                          </div>
-                        </form>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" form="postItemForm">Submit</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>                
-
-
-              </div>
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
-
-
-
+    </div>
+  </div>
 
 
 
@@ -461,9 +488,9 @@
     window.location.href = "responses.php";
   }
 
-  function redirectToFeed() {
-    window.location.href = "feed.php";
-  }
+  // function redirectToFeed() {
+  //   window.location.href = "feed.php";
+  // }
 </script>
 </body>
 
