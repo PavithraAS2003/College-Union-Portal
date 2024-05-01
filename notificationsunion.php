@@ -148,7 +148,17 @@
                 <h4 class="card-title">Notification</h4>
               </div>
               <div class="card-body">
-                
+              <form method="POST" action="post_notification.php">
+                  <div class="form-group">
+                    <label for="heading">Heading</label>
+                    <input type="text" class="form-control" id="heading" name="heading" placeholder="Enter heading" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="text">Text</label>
+                    <textarea class="form-control" id="text" name="text" rows="3" placeholder="Enter text" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Post Notification</button>
+                </form>
               </div>
             </div>
           </div>

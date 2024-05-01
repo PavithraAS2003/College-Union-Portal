@@ -1,3 +1,12 @@
+<?php
+include 'connect.php'; // Include the database connection file
+
+// Fetch notifications from the database
+$query = "SELECT * FROM notifications";
+$result = mysqli_query($con, $query);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -160,36 +169,17 @@
                 <h4 class="card-title">Notification</h4>
               </div>
               <div class="card-body">
-                <div class="alert alert-primary">
-                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-                    <i class="tim-icons icon-simple-remove"></i>
-                  </button>
-                  <span><b> Holiday on 26th May</b> </span>
-                </div>
-                <div class="alert alert-info">
-                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-                    <i class="tim-icons icon-simple-remove"></i>
-                  </button>
-                  <span><b>Series Examination commence on April 19th</b></span>
-                </div>
-                <div class="alert alert-success">
-                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-                    <i class="tim-icons icon-simple-remove"></i>
-                  </button>
-                  <span><b> Yagna Dhruva'24 on April 5,6,7</b></span>
-                </div>
-                <div class="alert alert-warning">
-                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-                    <i class="tim-icons icon-simple-remove"></i>
-                  </button>
-                  <span><b> Warning - </b> This is a regular notification made with ".alert-warning"</span>
-                </div>
-                <div class="alert alert-danger">
-                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-                    <i class="tim-icons icon-simple-remove"></i>
-                  </button>
-                  <span><b> Danger - </b> This is a regular notification made with ".alert-danger"</span>
-                </div>
+              <?php
+            // Display notifications dynamically
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="alert alert-primary">';
+                echo '<button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">';
+                echo '<i class="tim-icons icon-simple-remove"></i>';
+                echo '</button>';
+                echo '<span><b>' . $row['heading'] . '</b> ' . $row['text'] . '</span>';
+                echo '</div>';
+            }
+            ?>
               </div>
             </div>
           </div>

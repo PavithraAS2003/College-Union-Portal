@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
+   <!-- CSS for full calender -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+<!-- bootstrap css and js -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
   <title>
     Event Calendar
   </title>
@@ -146,37 +150,55 @@
           <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> Simple Table</h4>
+                <h4 class="card-title"></h4>
               </div>
               <div class="card-body">
-                <div class="container">
-                  <div class="page-header">
-                    <div class="pull-right form-inline">
-                      <div class="btn-group">
-                        <button class="btn btn-primary" data-calendar-nav="prev"><< Prev</button>
-                        <button class="btn btn-default" data-calendar-nav="today">Today</button>
-                        <button class="btn btn-primary" data-calendar-nav="next">Next >></button>
-                      </div>
-                      <div class="btn-group">
-                        <button class="btn btn-warning" data-calendar-view="year">Year</button>
-                        <button class="btn btn-warning active" data-calendar-view="month">Month</button>
-                        <button class="btn btn-warning" data-calendar-view="week">Week</button>
-                        <button class="btn btn-warning" data-calendar-view="day">Day</button>
-                      </div>
-                    </div>
-                    <h3></h3>
-                    <small>To see example with events navigate to February 2018</small>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-9">
-                      <div id="showEventCalendar"></div>
-                    </div>
-                    <div class="col-md-3">
-                      <h4>All Events List</h4>
-                      <ul id="eventlist" class="nav nav-list"></ul>
-                    </div>
-                  </div>
-                </div>
+              <div id="calendar"></div>
+
+<!-- Start popup dialog box -->
+<div class="modal fade" id="event_entry_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalLabel">Add New Event</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="img-container">
+					<div class="row">
+						<div class="col-sm-12">  
+							<div class="form-group">
+							  <label for="event_name">Event name</label>
+							  <input type="text" style="color: black;" name="event_name" id="event_name" class="form-control" placeholder="Enter your event name">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">  
+							<div class="form-group">
+							  <label for="event_start_date">Event start</label>
+							  <input type="date" style="color: black;" name="event_start_date" id="event_start_date" class="form-control onlydatepicker" placeholder="Event start date">
+							 </div>
+						</div>
+						<div class="col-sm-6">  
+							<div class="form-group">
+							  <label for="event_end_date">Event end</label>
+							  <input type="date" style="color: black;" name="event_end_date" id="event_end_date" class="form-control" placeholder="Event end date">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="save_event()">Save Event</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End popup dialog box -->
+
                   
               </div>
             </div>
@@ -404,6 +426,99 @@
         application: "black-dashboard-free"
       });
   </script>
+ 
+<!-- JS for jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- JS for full calender -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+	display_events();
+}); //end document.ready block
+
+function display_events() {
+	var events = new Array();
+$.ajax({
+    url: 'display_event.php',  
+    dataType: 'json',
+    success: function (response) {
+         
+    var result=response.data;
+    $.each(result, function (i, item) {
+    	events.push({
+            event_id: result[i].event_id,
+            title: result[i].title,
+            start: result[i].start,
+            end: result[i].end,
+            color: result[i].color,
+            url: result[i].url
+        }); 	
+    })
+	var calendar = $('#calendar').fullCalendar({
+	    defaultView: 'month',
+		 timeZone: 'local',
+	    editable: true,
+        selectable: true,
+		selectHelper: true,
+        select: function(start, end) {
+				alert(start);
+				alert(end);
+				$('#event_start_date').val(moment(start).format('YYYY-MM-DD'));
+				$('#event_end_date').val(moment(end).format('YYYY-MM-DD'));
+				$('#event_entry_modal').modal('show');
+			},
+        events: events,
+	    eventRender: function(event, element, view) { 
+            element.bind('click', function() {
+					alert(event.event_id);
+				});
+    	}
+		}); //end fullCalendar block	
+	  },//end success block
+	  error: function (xhr, status) {
+	  alert(response.msg);
+	  }
+	});//end ajax block	
+}
+
+function save_event()
+{
+var event_name=$("#event_name").val();
+var event_start_date=$("#event_start_date").val();
+var event_end_date=$("#event_end_date").val();
+if(event_name=="" || event_start_date=="" || event_end_date=="")
+{
+alert("Please enter all required details.");
+return false;
+}
+$.ajax({
+ url:"save_event.php",
+ type:"POST",
+ dataType: 'json',
+ data: {event_name:event_name,event_start_date:event_start_date,event_end_date:event_end_date},
+ success:function(response){
+   $('#event_entry_modal').modal('hide');  
+   if(response.status == true)
+   {
+	alert(response.msg);
+	location.reload();
+   }
+   else
+   {
+	 alert(response.msg);
+   }
+  },
+  error: function (xhr, status) {
+  console.log('ajax error = ' + xhr.statusText);
+  alert(response.msg);
+  }
+});    
+return false;
+}
+</script>
 </body>
 
 </html>
