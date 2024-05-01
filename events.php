@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: signin.php");
+    exit();
+}
+
+// Include the database connection file
+require 'connect.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +17,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+<!-- bootstrap css and js -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
   <title>
     Event Calendar
   </title>
   <!--     Fonts and icons     -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <!-- Nucleo Icons -->
@@ -161,7 +174,7 @@
                 <h4 class="card-title"> Simple Table</h4>
               </div>
               <div class="card-body">
-
+                <div id="calendar"></div>
                   
               </div>
             </div>
@@ -240,13 +253,7 @@
   </div>
   <!--   Core JS Files   -->
   <!-- JS for jQuery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- JS for full calender -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-<!-- bootstrap css and js -->
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <!-- Bootstrap JS -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -270,6 +277,13 @@
   <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/black-dashboard.min.js?v=1.0.0"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- JS for full calender -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+<!-- bootstrap css and js -->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -389,6 +403,50 @@
         application: "black-dashboard-free"
       });
   </script>
+  <script>
+        $(document).ready(function() {
+            // Fetch events from the database
+            $.ajax({
+                url: 'display_event.php',
+                dataType: 'json',
+                success: function(response) {
+                    var events = [];
+                    var result = response.data;
+
+                    // Loop through the events and create event objects
+                    $.each(result, function(i, item) {
+                        events.push({
+                            event_id: result[i].event_id,
+                            title: result[i].title,
+                            start: result[i].start,
+                            end: result[i].end,
+                            color: result[i].color,
+                            url: result[i].url
+                        });
+                    });
+
+                    // Initialize the FullCalendar
+                    $('#calendar').fullCalendar({
+                        defaultView: 'month',
+                        timeZone: 'local',
+                        editable: false, // Disable event editing
+                        selectable: false, // Disable event selection
+                        events: events,
+                        eventRender: function(event, element, view) {
+                            // Add click event handler for each event
+                            element.on('click', function() {
+                                // Handle event click (e.g., open a modal with event details)
+                                alert('Event ID: ' + event.event_id);
+                            });
+                        }
+                    });
+                },
+                error: function(xhr, status) {
+                    alert('Error fetching events');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
