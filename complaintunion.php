@@ -1,28 +1,4 @@
-<?php
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Include database connection
-    include 'connect.php';
 
-    // Escape user inputs for security
-    $name = mysqli_real_escape_string($con, $_POST['name']);
-    $semester = mysqli_real_escape_string($con, $_POST['semester']);
-    $branch = mysqli_real_escape_string($con, $_POST['branch']);
-    $phone = mysqli_real_escape_string($con, $_POST['phone']);
-    $complaint = mysqli_real_escape_string($con, $_POST['complaint']);
-
-    // Insert complaint into database
-    $sql = "INSERT INTO complaints (name, semester, branch, phone, complaint) VALUES ('$name', '$semester', '$branch', '$phone', '$complaint')";
-    if (mysqli_query($con, $sql)) {
-        echo "Complaint submitted successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($con);
-    }
-
-    // Close database connection
-    mysqli_close($con);
-}
-?>
 
 
 <!DOCTYPE html>
@@ -61,37 +37,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <ul class="nav">
           <li>
-            <a href="./dashboard.php">
+            <a href="./dashboardunion.php">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li>
-            <a href="./lostandfound.php">
-              <i class="tim-icons icon-atom"></i>
-              <p>Lost and Found</p>
-            </a>
-          </li>
-          <li>
-            <a href="./notifications.php">
+            <a href="./notificationsunion.php">
               <i class="tim-icons icon-bell-55"></i>
               <p>Notifications</p>
             </a>
           </li>
           <li>
-            <a href="./user.php">
-              <i class="tim-icons icon-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li>
-            <a href="./events.php">
+            <a href="./eventsunion.php">
               <i class="tim-icons icon-puzzle-10"></i>
               <p>Events</p>
             </a>
           </li>
           <li class="active ">
-            <a href="./complaint.php">
+            <a href="./complaintunion.php">
               <i class="tim-icons icon-align-center"></i>
               <p>Complaint and Query</p>
             </a>
@@ -116,45 +80,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="card">
               <div class="card-header mb-5">
                 <h5 class="card-category">Submit Complaint or Query</h5>
-                <h3 class="card-title">Please fill out the form below</h3>
+                <h3 class="card-title"></h3>
               </div>
               <div class="card-body">
-    <form id="complaint-form" method="POST" action="complaint.php">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
+              <?php
+// Include database connection
+include 'connect.php';
+
+// Fetch complaints from database
+$sql = "SELECT * FROM complaints";
+$result = mysqli_query($con, $sql);
+
+// Check if there are any complaints
+if (mysqli_num_rows($result) > 0) {
+    // Output data of each row
+    while ($row = mysqli_fetch_assoc($result)) {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title"><?php echo $row['name']; ?></h5>
+                <p class="card-category"><?php echo $row['semester'] . ', ' . $row['branch']; ?></p>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="semester">Semester</label>
-                    <input type="text" class="form-control" id="semester" name="semester" required>
-                </div>
+            <div class="card-body">
+                <p class="card-text"><?php echo $row['complaint']; ?></p>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="branch">Branch</label>
-                    <input type="text" class="form-control" id="branch" name="branch" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" required>
-                </div>
+            <div class="card-footer">
+                <button class="btn btn-primary">Address Complaint</button>
             </div>
         </div>
-        <div class="form-group">
-            <label for="complaint">Complaint</label>
-            <textarea class="form-control" id="complaint" name="complaint" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+        <?php
+    }
+} else {
+    echo "No complaints found";
+}
+
+// Close database connection
+mysqli_close($con);
+?>
+              </div>
+            </div>
           </div>
         </div>
       </div>

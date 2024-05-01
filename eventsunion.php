@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <title>
-    Black Dashboard by Creative Tim
+    Event Calendar
   </title>
   <!--     Fonts and icons     -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <!-- Nucleo Icons -->
@@ -19,7 +20,6 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assets/demo/demo.css" rel="stylesheet" />
 </head>
-
 <body class="">
   <div class="wrapper">
     <div class="sidebar">
@@ -34,9 +34,8 @@
             </a>
           </div>
         </div>
-        
         <ul class="nav">
-          <li class="active ">
+          <li>
             <a href="./dashboardunion.php">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Dashboard</p>
@@ -48,7 +47,7 @@
               <p>Notifications</p>
             </a>
           </li>
-          <li>
+          <li class="active ">
             <a href="./eventsunion.php">
               <i class="tim-icons icon-puzzle-10"></i>
               <p>Events</p>
@@ -75,7 +74,9 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+            <a class="navbar-brand" href="javascript:void(0)">
+              <img src="assets/img/logo.png" alt="College Union Logo" width="auto" height="90">
+          </a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -141,19 +142,47 @@
       </div>
       <!-- End Navbar -->
       <div class="content">
-                <div class="row">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="card card-tasks">
-                            <div class="card-header ">
-                                <h6 class="title d-inline">User Details</h6>
-                            </div>
-                            <div class="card-body ">
-                                
-                            </div>
-                        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"> Simple Table</h4>
+              </div>
+              <div class="card-body">
+                <div class="container">
+                  <div class="page-header">
+                    <div class="pull-right form-inline">
+                      <div class="btn-group">
+                        <button class="btn btn-primary" data-calendar-nav="prev"><< Prev</button>
+                        <button class="btn btn-default" data-calendar-nav="today">Today</button>
+                        <button class="btn btn-primary" data-calendar-nav="next">Next >></button>
+                      </div>
+                      <div class="btn-group">
+                        <button class="btn btn-warning" data-calendar-view="year">Year</button>
+                        <button class="btn btn-warning active" data-calendar-view="month">Month</button>
+                        <button class="btn btn-warning" data-calendar-view="week">Week</button>
+                        <button class="btn btn-warning" data-calendar-view="day">Day</button>
+                      </div>
                     </div>
+                    <h3></h3>
+                    <small>To see example with events navigate to February 2018</small>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-9">
+                      <div id="showEventCalendar"></div>
+                    </div>
+                    <div class="col-md-3">
+                      <h4>All Events List</h4>
+                      <ul id="eventlist" class="nav nav-list"></ul>
+                    </div>
+                  </div>
                 </div>
+                  
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
       <footer class="footer">
         <div class="container-fluid">
           <ul class="nav">
@@ -225,6 +254,23 @@
     </div>
   </div>
   <!--   Core JS Files   -->
+  <!-- JS for jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- JS for full calender -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+<!-- bootstrap css and js -->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- Underscore JS -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <!-- Calendar JS -->
+  <script type="text/javascript" src="js/calendar.js"></script>
+  <!-- Events JS -->
+  <script type="text/javascript" src="js/events.js"></script>
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
@@ -348,13 +394,6 @@
           $('body').removeClass('white-content');
         });
       });
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      demo.initDashboardPageCharts();
-
     });
   </script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -148,7 +149,10 @@
                                 <h6 class="title d-inline">User Details</h6>
                             </div>
                             <div class="card-body ">
-                                
+                                <div class="table-full-width table-responsive">
+                                      
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

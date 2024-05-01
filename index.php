@@ -1,3 +1,37 @@
+<?php
+session_start();
+
+include 'connect.php'; // Include the database connection file
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    if (isset($_POST["username"]) && isset($_POST["password"])) {
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        
+        // Check if the database connection is established
+        if ($con) {
+            // Query the database to check if the provided username and password exist
+            $query = "SELECT * FROM `union` WHERE `username` = '$username' AND `password` = '$password'";
+            $result = mysqli_query($con, $query);
+
+            // Check if the query returned any rows
+            if ($result && mysqli_num_rows($result) == 1) {
+                // Redirect to union.php on successful login
+                header("Location: union.php");
+                exit;
+            } else {
+                // Set showError variable to true to display error alert
+                $showError = true;
+            }
+        } else {
+            // Handle database connection error
+            die("Database connection error: " . mysqli_connect_error());
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -150,17 +184,23 @@
 
     <!-- Login form for union members -->
     <div class="container-fluid login-form">
-    <form method="post" action="unionlogin.php">
-    <div class="mb-3">
-        <label for="unionLogin" class="form-label">Union Login</label>
-        <input type="text" class="form-control" id="unionLogin" name="username" placeholder="Enter username" style="color: black;">
-    </div>
-    <div class="mb-3">
-        <label for="unionPassword" class="form-label">Password</label>
-        <input type="password" style:text class="form-control" id="unionPassword" name="password" placeholder="Password" style="color: black;">
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+    <form method="post" action="index.php">
+                <div class="mb-3">
+                    <label for="unionLogin" class="form-label">Union Login</label>
+                    <input type="text" class="form-control" id="unionLogin" name="username" placeholder="Enter username" style="color: black;">
+                </div>
+                <div class="mb-3">
+                    <label for="unionPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="unionPassword" name="password" placeholder="Password" style="color: black;">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <?php
+            // Display error alert if showError is set
+            if (isset($showError) && $showError) {
+                echo '<div class="alert alert-danger mt-3" role="alert">Please enter valid login credentials.</div>';
+            }
+            ?>
     </div>
 
     <!-- About Us -->

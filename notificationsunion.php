@@ -29,20 +29,20 @@
       <div class="sidebar-wrapper">
         <div class="logo">
           <div class="d-flex align-items-center">
+            <img src="assets/img/logo.png" alt="Union Logo" width="30">
             <a href="javascript:void(0)" class="simple-text logo-normal ml-2">
               LBSITW COLLEGE UNION
             </a>
           </div>
         </div>
-        
         <ul class="nav">
-          <li class="active ">
+          <li>
             <a href="./dashboardunion.php">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li>
+          <li class="active ">
             <a href="./notificationsunion.php">
               <i class="tim-icons icon-bell-55"></i>
               <p>Notifications</p>
@@ -51,7 +51,7 @@
           <li>
             <a href="./eventsunion.php">
               <i class="tim-icons icon-puzzle-10"></i>
-              <p>Events</p>
+              <p>events</p>
             </a>
           </li>
           <li>
@@ -75,7 +75,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+            <a class="navbar-brand" href="javascript:void(0)">Notifications</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -141,25 +141,23 @@
       </div>
       <!-- End Navbar -->
       <div class="content">
-                <div class="row">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="card card-tasks">
-                            <div class="card-header ">
-                                <h6 class="title d-inline">User Details</h6>
-                            </div>
-                            <div class="card-body ">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Notification</h4>
+              </div>
+              <div class="card-body">
+                
+              </div>
             </div>
+          </div>
       <footer class="footer">
         <div class="container-fluid">
           <ul class="nav">
             <li class="nav-item">
               <a href="javascript:void(0)" class="nav-link">
-                Creative Tim
+                UNION
               </a>
             </li>
             <li class="nav-item">
@@ -177,7 +175,7 @@
             ©
             <script>
               document.write(new Date().getFullYear())
-            </script>2018 made with <i class="tim-icons icon-heart-2"></i> by
+            </script>made with <i class="tim-icons icon-heart-2"></i> by
             <a href="javascript:void(0)" target="_blank">Creative Tim</a> for a better web.
           </div>
         </div>
@@ -348,13 +346,6 @@
           $('body').removeClass('white-content');
         });
       });
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      demo.initDashboardPageCharts();
-
     });
   </script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
