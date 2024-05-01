@@ -150,17 +150,17 @@
 
     <!-- Login form for union members -->
     <div class="container-fluid login-form">
-      <form>
-        <div class="mb-3" >
-          <label  for="unionLogin" class="form-label">Union Login</label>
-          <input type="text" class="form-control" id="unionLogin" placeholder="Enter username">
-        </div>
-        <div class="mb-3">
-          <label for="unionPassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="unionPassword" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-      </form>
+    <form method="post" action="unionlogin.php">
+    <div class="mb-3">
+        <label for="unionLogin" class="form-label">Union Login</label>
+        <input type="text" class="form-control" id="unionLogin" name="username" placeholder="Enter username" style="color: black;">
+    </div>
+    <div class="mb-3">
+        <label for="unionPassword" class="form-label">Password</label>
+        <input type="password" style:text class="form-control" id="unionPassword" name="password" placeholder="Password" style="color: black;">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
     </div>
 
     <!-- About Us -->
@@ -258,9 +258,6 @@
     <footer class="footer">
       <div class="container-fluid">
         <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Creative Tim</a>
-          </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About Us</a>
           </li>
