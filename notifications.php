@@ -1,8 +1,10 @@
 <?php
 include 'connect.php'; // Include the database connection file
-
+$limit = 5; // Number of notifications per page
+$page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page, default is 1
+$start = ($page - 1) * $limit; //
 // Fetch notifications from the database
-$query = "SELECT * FROM notifications";
+$query = "SELECT * FROM notifications ORDER BY id DESC LIMIT $start, $limit"; // Fetch the latest notifications first and limit by page
 $result = mysqli_query($con, $query);
 ?>
 
@@ -169,20 +171,31 @@ $result = mysqli_query($con, $query);
                 <h4 class="card-title">Notification</h4>
               </div>
               <div class="card-body">
-              <?php
-            // Display notifications dynamically
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="alert alert-primary">';
-                echo '<button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">';
-                echo '<i class="tim-icons icon-simple-remove"></i>';
-                echo '</button>';
-                echo '<span><b>' . $row['heading'] . '</b> ' . $row['text'] . '</span>';
-                echo '</div>';
-            }
-            ?>
+                <?php
+                // Display notifications dynamically
+                while ($row = mysqli_fetch_assoc($result)) {
+                  echo '<div class="alert alert-primary">';
+                  // Remove the close button
+                  echo '<span><b>' . $row['heading'] . '</b> ' . $row['text'] . '</span>';
+                  echo '</div>';
+                }
+                ?>
+                <!-- Pagination links -->
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
+                      <a class="page-link" href="<?php if($page > 1){ echo "notifications.php?page=".($page - 1); } ?>">Previous</a>
+                    </li>
+                    <li class="page-item <?php if($page >= ceil(mysqli_num_rows(mysqli_query($con, "SELECT * FROM notifications")) / $limit)){ echo 'disabled'; } ?>">
+                      <a class="page-link" href="<?php if($page < ceil(mysqli_num_rows(mysqli_query($con, "SELECT * FROM notifications")) / $limit)){ echo "notifications.php?page=".($page + 1); } ?>">Next</a>
+                    </li>
+                  </ul>
+                </nav>
               </div>
             </div>
           </div>
+        </div>
+      </div>
       <footer class="footer">
         <div class="container-fluid">
           <ul class="nav">

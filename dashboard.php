@@ -180,49 +180,50 @@ if(isset($_SESSION['user_id'])) {
       </div>
       <!-- End Navbar -->
       <div class="content">
-                <div class="row">
-                    <div class="col-lg-6 col-md-12">
-                        <div class="card card-tasks">
-                            <div class="card-header ">
-                                <h6 class="title d-inline">User Details</h6>
-                            </div>
-                            <div class="card-body ">
-                                <div class="table-full-width table-responsive">
-                                      <tbody>
-                                          <?php if(isset($user)) { ?>
-                                          <tr>
-                                            <td class="text-left">Register Number</td>
-                                            <td class="text-right"><?php echo $user['register_number']; ?></td>
-                                          </tr>
-                                          <tr>
-                                            <td class="text-left">Name</td>
-                                            <td class="text-right"><?php echo $user['name']; ?></td>
-                                          </tr>
-                                          <tr>
-                                            <td class="text-left">Email</td>
-                                            <td class="text-right"><?php echo $user['email']; ?></td>
-                                          </tr>
-                                          <tr>
-                                            <td class="text-left">Phone Number</td>
-                                            <td class="text-right"><?php echo $user['phone']; ?></td>
-                                          </tr>
-                                          <tr>
-                                            <td class="text-left">Semester</td>
-                                            <td class="text-right"><?php echo $user['semester']; ?></td>
-                                          </tr>
-                                          <tr>
-                                            <td class="text-left">Branch</td>
-                                            <td class="text-right"><?php echo $user['branch']; ?></td>
-                                          </tr>
-                                          <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">User Details</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <?php if(isset($user)) { ?>
+                <tr>
+                  <td class="text-left">Register Number</td>
+                  <td class="text-right"><?php echo $user['register_number']; ?></td>
+                </tr>
+                <tr>
+                  <td class="text-left">Name</td>
+                  <td class="text-right"><?php echo $user['name']; ?></td>
+                </tr>
+                <tr>
+                  <td class="text-left">Email</td>
+                  <td class="text-right"><?php echo $user['email']; ?></td>
+                </tr>
+                <tr>
+                  <td class="text-left">Phone Number</td>
+                  <td class="text-right"><?php echo $user['phone']; ?></td>
+                </tr>
+                <tr>
+                  <td class="text-left">Semester</td>
+                  <td class="text-right"><?php echo $user['semester']; ?></td>
+                </tr>
+                <tr>
+                  <td class="text-left">Branch</td>
+                  <td class="text-right"><?php echo $user['branch']; ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
       <footer class="footer">
         <div class="container-fluid">
           <ul class="nav">
