@@ -146,12 +146,24 @@
                     <div class="col-lg-6 col-md-12">
                         <div class="card card-tasks">
                             <div class="card-header ">
-                                <h6 class="title d-inline">User Details</h6>
+                                <h6 class="title d-inline">Union Member Details</h6>
                             </div>
                             <div class="card-body ">
                                 <div class="table-full-width table-responsive">
-                                      
-                                    </table>
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                      <td class="text-left">Name</td>
+                                      <td class="text-right">Sulthana Sayed</td>
+                                    </tr>
+                                      <tr>
+                                          <td class="text-left">Position</td>
+                                          <td class="text-right">Chairpersion</td>
+                                      </tr> 
+                                    </tbody>
+
+
+                                </table>
                                 </div>
                             </div>
                         </div>
