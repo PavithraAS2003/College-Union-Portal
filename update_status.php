@@ -42,15 +42,3 @@ if ($updateResult) {
 // Redirect back to mylistings.php after a short delay
 header("Refresh: 3; URL=mylistings.php");
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Answer Status</title>
-    <!-- Include any necessary CSS or JS files -->
-</head>
-<body>
-    <!-- You can display a message or any additional content here -->
-</body>
-</html>

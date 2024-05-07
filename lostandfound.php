@@ -15,6 +15,7 @@ if(isset($_SESSION['user_id'])) {
     $found_items_query = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE item_type = 'found'";
     $found_items_result = mysqli_query($con, $found_items_query);
     $found_items = mysqli_fetch_all($found_items_result, MYSQLI_ASSOC);
+    
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Process form data when form is submitted
@@ -259,7 +260,6 @@ if(isset($_SESSION['user_id'])) {
                           <?php if ($lost_item['item_type'] == 'lost') : ?>
                               <button class="btn btn-primary" data-toggle="modal" data-target="#claimItemModal" data-item-id="<?php echo $lost_item['id']; ?>">Found It</button>
                           <?php endif; ?>
-                          <a href="item_details.php?id=<?php echo $lostItem['id']; ?>" class="btn btn-primary btn-sm">More Details</a>
                       </div>
 
                 </div>
