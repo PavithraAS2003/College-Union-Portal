@@ -55,41 +55,50 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     <!-- Same as in index.html -->
 
     <!-- Signup Form -->
-    <div class="container-fluid login-form">
-        <form action="signup.php" method="post">
-            <!-- Input fields for name, register number, email, phone, semester, branch, and password -->
-            <div class="mb-3">
+    <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Sign Up</h3>
+          </div>
+          <div class="card-body">
+            <form action="signup.php" method="post">
+              <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
-            </div>
-            <div class="mb-3">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+              </div>
+              <div class="mb-3">
                 <label for="registerNumber" class="form-label">Register Number</label>
-                <input type="text" class="form-control" id="registerNumber" name="registerNumber" placeholder="Enter your register number">
-            </div>
-            <div class="mb-3">
+                <input type="text" class="form-control" id="registerNumber" name="registerNumber" placeholder="Enter your register number" required>
+              </div>
+              <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
-            </div>
-            <div class="mb-3">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+              </div>
+              <div class="mb-3">
                 <label for="phone" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number">
-            </div>
-            <div class="mb-3">
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+              </div>
+              <div class="mb-3">
                 <label for="semester" class="form-label">Semester</label>
-                <input type="text" class="form-control" id="semester" name="semester" placeholder="Enter your semester">
-            </div>
-            <div class="mb-3">
+                <input type="text" class="form-control" id="semester" name="semester" placeholder="Enter your semester" required>
+              </div>
+              <div class="mb-3">
                 <label for="branch" class="form-label">Branch</label>
-                <input type="text" class="form-control" id="branch" name="branch" placeholder="Enter your branch">
-            </div>
-            <div class="mb-3">
+                <input type="text" class="form-control" id="branch" name="branch" placeholder="Enter your branch" required>
+              </div>
+              <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-            </div>
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-        </form>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="assets/js/core/jquery.min.js"></script>

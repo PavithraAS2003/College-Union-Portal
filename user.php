@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,25 +8,25 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <title>
     Black Dashboard by Creative Tim
-  </title>
+  </title> -->
   <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"> -->
   <!-- Nucleo Icons -->
-  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+  <!-- <link href="assets/css/nucleo-icons.css" rel="stylesheet" /> -->
   <!-- CSS Files -->
-  <link href="assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+  <!-- <link href="assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" /> -->
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="assets/demo/demo.css" rel="stylesheet" />
-</head>
+  <!-- <link href="assets/demo/demo.css" rel="stylesheet" /> -->
+<!-- </head>
 
 <body class="">
   <div class="wrapper">
-    <div class="sidebar">
+    <div class="sidebar"> -->
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
     -->
-      <div class="sidebar-wrapper">
+      <!-- <div class="sidebar-wrapper">
         <div class="logo">
           <div class="d-flex align-items-center">
             <img src="assets/img/logo.png" alt="Union Logo" width="30">
@@ -75,9 +75,9 @@
         </ul>
       </div>
     </div>
-    <div class="main-panel">
+    <div class="main-panel"> -->
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+      <!-- <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle d-inline">
@@ -150,9 +150,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- End Navbar -->
-      <div class="content">
+      <!-- <div class="content">
         <div class="row">
           <div class="col-md-8">
             <div class="card">
@@ -346,22 +346,22 @@
         </li>
       </ul>
     </div>
-  </div>
+  </div> -->
   <!--   Core JS Files   -->
-  <script src="assets/js/core/jquery.min.js"></script>
+  <!-- <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
-  <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
   <!--  Google Maps Plugin    -->
   <!-- Place this tag in your head or just before your close body tag. -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> -->
   <!-- Chart JS -->
-  <script src="assets/js/plugins/chartjs.min.js"></script>
+  <!-- <script src="assets/js/plugins/chartjs.min.js"></script> -->
   <!--  Notifications Plugin    -->
-  <script src="assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- <script src="assets/js/plugins/bootstrap-notify.js"></script> -->
   <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="assets/js/black-dashboard.min.js?v=1.0.0"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
-  <script src="assets/demo/demo.js"></script>
+  <!-- <script src="assets/js/black-dashboard.min.js?v=1.0.0"></script> -->
+  <!-- <script src="assets/demo/demo.js"></script>
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -483,4 +483,4 @@
   </script>
 </body>
 
-</html>
+</html> -->

@@ -81,12 +81,12 @@ if(isset($_SESSION['user_id'])) {
               <p>Notifications</p>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="./user.php">
               <i class="tim-icons icon-single-02"></i>
               <p>User Profile</p>
             </a>
-          </li>
+          </li> -->
           <li>
             <a href="./events.php">
               <i class="tim-icons icon-puzzle-10"></i>

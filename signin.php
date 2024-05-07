@@ -50,20 +50,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <link href="assets/demo/demo.css" rel="stylesheet" />
 </head>
 <body>
-<div class="container mt-5">
-    <h2>Sign In</h2>
-    <form action="signin.php" method="post">
-        <div class="mb-3">
-            <label for="registerNumber" class="form-label">Register Number</label>
-            <input type="text" class="form-control" id="registerNumber" name="registerNumber" placeholder="Enter your register number">
+<div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Sign In</h3>
+          </div>
+          <div class="card-body">
+            <form action="signin.php" method="post">
+              <div class="mb-3">
+                <label for="registerNumber" class="form-label">Register Number</label>
+                <input type="text" class="form-control" id="registerNumber" name="registerNumber" placeholder="Enter your register number" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+          </div>
         </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-        </div>
-        <button type="submit" class="btn btn-primary">Sign In</button>
-    </form>
-</div>
+      </div>
+    </div>
+  </div>
 <script src="assets/js/core/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="assets/js/core/popper.min.js"></script>

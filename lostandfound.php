@@ -84,7 +84,12 @@ if(isset($_SESSION['user_id'])) {
   <link href="assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assets/demo/demo.css" rel="stylesheet" />
-  
+  <style>
+  .card-img-top {
+    height: 200px; /* Adjust this value as needed */
+    object-fit: cover;
+  }
+</style>
 </head>
 
 <body class="">
@@ -120,12 +125,12 @@ if(isset($_SESSION['user_id'])) {
               <p>Notifications</p>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="./user.php">
               <i class="tim-icons icon-single-02"></i>
               <p>User Profile</p>
             </a>
-          </li>
+          </li> -->
           <li>
             <a href="./events.php">
               <i class="tim-icons icon-puzzle-10"></i>
@@ -243,7 +248,7 @@ if(isset($_SESSION['user_id'])) {
               <div class="col-md-4 mb-4">
                 <div class="card">
                 <?php if (!empty($lost_item['image_url'])) : ?>
-                          <img src="<?php echo $lost_item['image_url']; ?>" class="card-img-top" style="width: 100%;">
+                          <img src="<?php echo $lost_item['image_url']; ?>" class="card-img-top">
                       <?php endif; ?>
                       <div class="card-body">
                           <h5 class="card-title"><?php echo $lost_item['item_name']; ?></h5>
@@ -274,7 +279,7 @@ if(isset($_SESSION['user_id'])) {
               <div class="col-md-4 mb-4">
                 <div class="card">
                 <?php if (!empty($found_item['image_url'])) : ?>
-                          <img src="<?php echo $found_item['image_url']; ?>" class="card-img-top" style="width: 100%;">
+                          <img src="<?php echo $found_item['image_url']; ?>" class="card-img-top">
                       <?php endif; ?>
                       <div class="card-body">
                           <h5 class="card-title"><?php echo $found_item['item_name']; ?></h5>
