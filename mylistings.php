@@ -80,25 +80,18 @@ if (mysqli_num_rows($lostItemsResult) > 0) {
             </a>
           </li>
           <li>
-            <a href="./notifications.html">
+            <a href="./notifications.php">
               <i class="tim-icons icon-bell-55"></i>
               <p>Notifications</p>
             </a>
           </li>
-          <li>
-            <a href="./user.html">
-              <i class="tim-icons icon-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li>
-            <a href="./events.html">
+            <a href="./events.php">
               <i class="tim-icons icon-puzzle-10"></i>
               <p>Events</p>
             </a>
           </li>
           <li>
-            <a href="./complaint.html">
+            <a href="./complaint.php">
               <i class="tim-icons icon-align-center"></i>
               <p>Complaint and Query</p>
             </a>

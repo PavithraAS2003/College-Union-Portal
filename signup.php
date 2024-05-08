@@ -56,49 +56,66 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
     <!-- Signup Form -->
     <div class="container">
-    <div class="row justify-content-center mt-5">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">Sign Up</h3>
-          </div>
-          <div class="card-body">
-            <form action="signup.php" method="post">
-              <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
-              </div>
-              <div class="mb-3">
-                <label for="registerNumber" class="form-label">Register Number</label>
-                <input type="text" class="form-control" id="registerNumber" name="registerNumber" placeholder="Enter your register number" required>
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-              </div>
-              <div class="mb-3">
-                <label for="phone" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
-              </div>
-              <div class="mb-3">
-                <label for="semester" class="form-label">Semester</label>
-                <input type="text" class="form-control" id="semester" name="semester" placeholder="Enter your semester" required>
-              </div>
-              <div class="mb-3">
-                <label for="branch" class="form-label">Branch</label>
-                <input type="text" class="form-control" id="branch" name="branch" placeholder="Enter your branch" required>
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
-              </div>
-              <button type="submit" class="btn btn-primary">Sign Up</button>
-            </form>
-          </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Sign Up</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="signup.php" method="post">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerNumber" class="form-label">Register Number</label>
+                                <input type="text" class="form-control" id="registerNumber" name="registerNumber" placeholder="lbt21cs091" pattern="^lbt\d{2}[a-zA-Z]{2}\d{3}$" title="Please enter a valid register number starting with 'lbt' followed by year, branch, and unique id" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number (10 digits)" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="semester" class="form-label">Semester</label>
+                                <select class="form-control" id="semester" name="semester" required>
+                                    <option value="">Select Semester</option>
+                                    <option style="color: black;" value="S1">S1</option>
+                                    <option style="color: black;" value="S2">S2</option>
+                                    <option style="color: black;" value="S3">S3</option>
+                                    <option style="color: black;" value="S4">S4</option>
+                                    <option style="color: black;" value="S5">S5</option>
+                                    <option style="color: black;" value="S6">S6</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="branch" class="form-label">Branch</label>
+                                <select class="form-control" id="branch" name="branch" required>
+                                    <option style="color: black;" value="">Select Branch</option>
+                                    <option style="color: black;" value="CSE1">CSE1</option>
+                                    <option style="color: black;" value="CSE2">CSE2</option>
+                                    <option style="color: black;" value="IT">IT</option>
+                                    <option style="color: black;" value="ECE">ECE</option>
+                                    <option style="color: black;" value="ERE">ERE</option>
+                                    <option style="color: black;" value="CIVIL">CIVIL</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password (at least 8 characters with uppercase, lowercase, number, and special character)" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character" required>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="assets/js/core/jquery.min.js"></script>
