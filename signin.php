@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     } else {
         // User not found or password incorrect, show an alert
-        echo "<script>alert('Incorrect username or password');</script>";
+        $showError = true;
     }
 
     // Close the connection
@@ -69,6 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               </div>
               <button type="submit" class="btn btn-primary">Sign In</button>
             </form>
+            <?php
+            // Display error alert if showError is set
+            if (isset($showError) && $showError) {
+                echo '<div class="alert alert-danger mt-3" role="alert">Please enter valid login credentials.</div>';
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -84,5 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <script src="assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
+  <script>
+    // Fade out the error alert after 3 seconds
+    setTimeout(function() {
+      $(".alert").fadeOut();
+    }, 3000);
+  </script>
 </body>
 </html>

@@ -327,6 +327,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <script src="assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
+  <script>
+    // Fade out the error alert after 3 seconds
+    setTimeout(function() {
+      $(".alert").fadeOut();
+    }, 3000);
+  </script>
 </body>
 
 </html>
