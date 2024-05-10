@@ -628,6 +628,53 @@ $(document).ready(function() {
     });
 });
 </script>
+<!-- Add this script to your lostandfound.php file -->
+<script>
+$(document).ready(function() {
+    $('#claimItemForm').submit(function(e) {
+        e.preventDefault(); // Prevent form submission
+
+        // Serialize form data
+        var formData = $(this).serialize();
+
+        // Send AJAX request
+        $.ajax({
+            type: 'POST',
+            url: 'claim_item.php',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // Item claimed successfully
+                    $('#claimItemModal').modal('hide'); // Hide modal
+                    // Display success message in alert
+                    showAlert('Item claimed successfully.', 'success');
+                    // Automatically close modal after 3 seconds
+                    setTimeout(function() {
+                        $('#claimItemModal').modal('hide');
+                    }, 3000);
+                } else {
+                    // Error occurred
+                    showAlert(response.message, 'danger');
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle AJAX error
+                showAlert('An error occurred while processing your request.', 'danger');
+            }
+        });
+    });
+
+    // Function to show Bootstrap alert
+    function showAlert(message, type) {
+        var alert = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' + message +
+            '</div>';
+        $('#claimItemModal .modal-body').prepend(alert);
+    }
+});
+</script>
+
+
 </body>
 
 </html>
