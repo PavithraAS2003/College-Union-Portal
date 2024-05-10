@@ -94,21 +94,33 @@ $result = mysqli_query($con, $sql);
 // Check if there are any complaints
 if (mysqli_num_rows($result) > 0) {
     // Output data of each row
+    $counter = 0; // Counter to track the number of complaints in a row
     while ($row = mysqli_fetch_assoc($result)) {
+        // Start a new row if counter is a multiple of 3
+        if ($counter % 3 == 0) {
+            echo '<div class="row">';
+        }
         ?>
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title"><?php echo $row['name']; ?></h5>
-                <p class="card-category"><?php echo $row['semester'] . ', ' . $row['branch']; ?></p>
-            </div>
-            <div class="card-body">
-                <p class="card-text"><?php echo $row['complaint']; ?></p>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-primary">Address Complaint</button>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title"><?php echo $row['name']; ?></h5>
+                    <p class="card-category"><?php echo $row['semester'] . ', ' . $row['branch']; ?></p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><?php echo $row['complaint']; ?></p>
+                </div>
+                <div class="card-footer">
+    <a href="https://api.whatsapp.com/send?phone=<?php echo $row['phone']; ?>" class="btn btn-primary">Address Complaint</a>
+</div>
             </div>
         </div>
         <?php
+        // End the row if counter is a multiple of 3 or if it's the last complaint
+        if ($counter % 3 == 2 || $counter == mysqli_num_rows($result) - 1) {
+            echo '</div>';
+        }
+        $counter++;
     }
 } else {
     echo "No complaints found";
@@ -117,6 +129,7 @@ if (mysqli_num_rows($result) > 0) {
 // Close database connection
 mysqli_close($con);
 ?>
+
               </div>
             </div>
           </div>
