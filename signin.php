@@ -2,28 +2,27 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    include 'connect.php'; // Assuming this file contains the database connection details
+    include 'connect.php';
     
-    // Fetch form data
     $registerNumber = $_POST['registerNumber'];
     $password = $_POST['password'];
 
-    // Prepare and execute SQL statement
     $sql = "SELECT * FROM `users` WHERE register_number='$registerNumber' AND password='$password'";
     $result = mysqli_query($con, $sql);
 
     if (mysqli_num_rows($result) == 1) {
-        // User found, set session variable and redirect to dashboard
-        $row = mysqli_fetch_assoc($result); // Fetch the row
-        $_SESSION['user_id'] = $row['id']; // Assuming 'id' is the user's unique identifier in the database
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['name'] = $row['name'];
+        $_SESSION['semester'] = $row['semester'];
+        $_SESSION['branch'] = $row['branch'];
+        $_SESSION['phone'] = $row['phone'];
         header("Location: dashboard.php");
         exit();
     } else {
-        // User not found or password incorrect, show an alert
         $showError = true;
     }
 
-    // Close the connection
     mysqli_close($con);
 }
 ?>

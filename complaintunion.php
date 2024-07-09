@@ -1,5 +1,21 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: signin.php");
+    exit();
+}
 
+include 'connect.php';
 
+// Fetch complaints from database
+$sql_complaints = "SELECT * FROM complaints ORDER BY id DESC";
+$result_complaints = mysqli_query($con, $sql_complaints);
+
+if (!$result_complaints) {
+    echo "Error fetching complaints: " . mysqli_error($con);
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,66 +91,53 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header mb-5">
-                <h5 class="card-category">Submit Complaint or Query</h5>
-                <h3 class="card-title"></h3>
-              </div>
-              <div class="card-body">
-              <?php
-// Include database connection
-include 'connect.php';
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header mb-5">
+                                <h5 class="card-category">Complaints and Queries</h5>
+                                <h3 class="card-title"></h3>
+                            </div>
+                            <div class="card-body">
+                                <?php
+                                if (mysqli_num_rows($result_complaints) > 0) {
+                                    $counter = 0;
+                                    while ($row = mysqli_fetch_assoc($result_complaints)) {
+                                        if ($counter % 3 == 0) {
+                                            echo '<div class="row">';
+                                        }
+                                        ?>
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="card-title"><?php echo $row['name']; ?></h5>
+                                                    <p class="card-category"><?php echo $row['semester'] . ', ' . $row['branch']; ?></p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p class="card-text"><?php echo $row['complaint']; ?></p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <a href="https://api.whatsapp.com/send?phone=<?php echo $row['phone']; ?>" class="btn btn-primary" target="_blank">Address Complaint</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        if ($counter % 3 == 2 || $counter == mysqli_num_rows($result_complaints) - 1) {
+                                            echo '</div>';
+                                        }
+                                        $counter++;
+                                    }
+                                } else {
+                                    echo "No complaints found";
+                                }
 
-// Fetch complaints from database
-$sql = "SELECT * FROM complaints";
-$result = mysqli_query($con, $sql);
-
-// Check if there are any complaints
-if (mysqli_num_rows($result) > 0) {
-    // Output data of each row
-    $counter = 0; // Counter to track the number of complaints in a row
-    while ($row = mysqli_fetch_assoc($result)) {
-        // Start a new row if counter is a multiple of 3
-        if ($counter % 3 == 0) {
-            echo '<div class="row">';
-        }
-        ?>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title"><?php echo $row['name']; ?></h5>
-                    <p class="card-category"><?php echo $row['semester'] . ', ' . $row['branch']; ?></p>
+                                mysqli_close($con);
+                                ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p class="card-text"><?php echo $row['complaint']; ?></p>
-                </div>
-                <div class="card-footer">
-    <a href="https://api.whatsapp.com/send?phone=<?php echo $row['phone']; ?>" class="btn btn-primary">Address Complaint</a>
-</div>
             </div>
-        </div>
-        <?php
-        // End the row if counter is a multiple of 3 or if it's the last complaint
-        if ($counter % 3 == 2 || $counter == mysqli_num_rows($result) - 1) {
-            echo '</div>';
-        }
-        $counter++;
-    }
-} else {
-    echo "No complaints found";
-}
-
-// Close database connection
-mysqli_close($con);
-?>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <footer class="footer">
         <!-- Footer content -->
       </footer>

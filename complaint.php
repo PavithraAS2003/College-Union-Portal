@@ -1,28 +1,33 @@
 <?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: signin.php");
+    exit();
+}
+
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Include database connection
     include 'connect.php';
 
-    // Escape user inputs for security
-    $name = mysqli_real_escape_string($con, $_POST['name']);
-    $semester = mysqli_real_escape_string($con, $_POST['semester']);
-    $branch = mysqli_real_escape_string($con, $_POST['branch']);
-    $phone = mysqli_real_escape_string($con, $_POST['phone']);
+    $name = mysqli_real_escape_string($con, $_SESSION['name']);
+    $semester = mysqli_real_escape_string($con, $_SESSION['semester']);
+    $branch = mysqli_real_escape_string($con, $_SESSION['branch']);
+    $phone = mysqli_real_escape_string($con, $_SESSION['phone']);
     $complaint = mysqli_real_escape_string($con, $_POST['complaint']);
 
-    // Insert complaint into database
     $sql = "INSERT INTO complaints (name, semester, branch, phone, complaint) VALUES ('$name', '$semester', '$branch', '$phone', '$complaint')";
     if (mysqli_query($con, $sql)) {
-        echo "Complaint submitted successfully";
+        $success_message = "Complaint submitted successfully";
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($con);
+        $error_message = "Error: " . mysqli_error($con);
     }
 
-    // Close database connection
     mysqli_close($con);
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -164,47 +169,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header mb-5">
-                <h5 class="card-category">Submit Complaint or Query</h5>
-                <h3 class="card-title">Please fill out the form below</h3>
+              <div class="card-header">
+                <h5 class="title">Submit Complaint</h5>
               </div>
               <div class="card-body">
-    <form id="complaint-form" method="POST" action="complaint.php">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
+                <form action="complaint.php" method="post">
+                  <div class="form-group">
+                    <label for="complaint">Complaint</label>
+                    <textarea class="form-control" id="complaint" name="complaint" rows="4" placeholder="Enter your complaint" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                </form>
+              </div>
+              <div class="card-footer">
+                                <?php
+                                if (isset($success_message)) {
+                                    echo '<div class="alert alert-success mt-3" role="alert">' . $success_message . '</div>';
+                                }
+                                if (isset($error_message)) {
+                                    echo '<div class="alert alert-danger mt-3" role="alert">' . $error_message . '</div>';
+                                }
+                                ?>
+              </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="semester">Semester</label>
-                    <input type="text" class="form-control" id="semester" name="semester" required>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="branch">Branch</label>
-                    <input type="text" class="form-control" id="branch" name="branch" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" required>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="complaint">Complaint</label>
-            <textarea class="form-control" id="complaint" name="complaint" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
           </div>
         </div>
       </div>
