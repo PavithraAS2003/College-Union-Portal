@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Check if the query returned any rows
             if ($result && mysqli_num_rows($result) == 1) {
                 // Redirect to union.php on successful login
-                header("Location: union.php");
+                header("Location: dashboardunion.php");
                 exit;
             } else {
                 // Set showError variable to true to display error alert
