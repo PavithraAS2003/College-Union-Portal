@@ -168,7 +168,7 @@ require 'connect.php';
             ©
             <script>
               document.write(new Date().getFullYear())
-            </script>2018 made with <i class="tim-icons icon-heart-2"></i> by
+            </script> made with <i class="tim-icons icon-heart-2"></i> by
             <a href="javascript:void(0)" target="_blank">Team Avenir</a> for College Union LBSITW.
           </div>
         </div>

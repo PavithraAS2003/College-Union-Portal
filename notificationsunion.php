@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <title>
-    Black Dashboard by Creative Tim
+  College Union LBSITW
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
@@ -146,28 +146,13 @@
       <footer class="footer">
         <div class="container-fluid">
           <ul class="nav">
-            <li class="nav-item">
-              <a href="javascript:void(0)" class="nav-link">
-                UNION
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="javascript:void(0)" class="nav-link">
-                About Us
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="javascript:void(0)" class="nav-link">
-                Blog
-              </a>
-            </li>
           </ul>
           <div class="copyright">
             ©
             <script>
               document.write(new Date().getFullYear())
-            </script>made with <i class="tim-icons icon-heart-2"></i> by
-            <a href="javascript:void(0)" target="_blank">Creative Tim</a> for a better web.
+            </script> made with <i class="tim-icons icon-heart-2"></i> by
+            <a href="javascript:void(0)" target="_blank">Team Avenir</a> for College Union LBSITW.
           </div>
         </div>
       </footer>
