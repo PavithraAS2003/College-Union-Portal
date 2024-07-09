@@ -12,9 +12,9 @@ if(isset($_SESSION['user_id'])) {
     $lost_items = mysqli_fetch_all($lost_items_result, MYSQLI_ASSOC);
 
     // Fetch found items from the database
-    $found_items_query = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE item_type = 'found'";
-    $found_items_result = mysqli_query($con, $found_items_query);
-    $found_items = mysqli_fetch_all($found_items_result, MYSQLI_ASSOC);
+    // $found_items_query = "SELECT id, item_name, description, question, item_type, image_url FROM lost_and_found WHERE item_type = 'found'";
+    // $found_items_result = mysqli_query($con, $found_items_query);
+    // $found_items = mysqli_fetch_all($found_items_result, MYSQLI_ASSOC);
     
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -249,36 +249,6 @@ if(isset($_SESSION['user_id'])) {
           </div>
         </div>
       </div>
-      <!-- Found Items -->
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Found Items</h5>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <?php foreach ($found_items as $found_item) : ?>
-              <div class="col-md-4 mb-4">
-                <div class="card">
-                <?php if (!empty($found_item['image_url'])) : ?>
-                          <img src="<?php echo $found_item['image_url']; ?>" class="card-img-top">
-                      <?php endif; ?>
-                      <div class="card-body">
-                          <h5 class="card-title"><?php echo $found_item['item_name']; ?></h5>
-                          <p class="card-text">Description: <?php echo $found_item['description']; ?></p>
-                          <?php if (!empty($found_item['question'])) : ?>
-                              <p class="card-text">Question: <?php echo $found_item['question']; ?></p>
-                          <?php endif; ?>
-                          <?php if ($found_item['item_type'] == 'lost') : ?>
-                              <button class="btn btn-primary" data-toggle="modal" data-target="#claimItemModal" data-item-id="<?php echo $found_item['id']; ?>">Found It</button>
-                          <?php endif; ?>
-                          
-                      </div>
-                </div>
-              </div>
-            <?php endforeach; ?>
-          </div>
-        </div>
-      </div>
 
       <div class="modal fade" id="claimItemModal" tabindex="-1" role="dialog" aria-labelledby="claimItemModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -332,12 +302,10 @@ if(isset($_SESSION['user_id'])) {
                             <input type="text" style="color: black;" class="form-control" id="question" name="question" required>
                           </div>
                           <div class="form-group">
-                            <label for="itemType" style="color: black;" >Item Type</label>
-                            <select class="form-control"style="color: black;"  id="itemType" name="itemType" required>
-                              <option value="lost" style="color: black;" >Lost It</option>
-                              <option value="found" style="color: black;" >Found It</option>
-                            </select>
-                          </div>
+  <label for="itemType" style="color: black;">Item Type</label>
+  <input type="hidden" id="itemType" name="itemType" value="lost">
+  <p style="color: black;">Lost Item</p>
+</div>
                           <div class="form-group">
                             <label for="imageInput"style="color: black;" >Upload Image</label>
                             <input type="file" style="color: black;" class="form-control-file" id="imageInput" name="imageInput">
@@ -640,7 +608,21 @@ $(document).ready(function() {
     }
 });
 </script>
-
+<script>
+document.getElementById('imageInput').addEventListener('change', function(e) {
+  var fileName = e.target.files[0].name;
+  var fileNameDisplay = document.createElement('p');
+  fileNameDisplay.textContent = 'Selected file: ' + fileName;
+  fileNameDisplay.style.color = 'black';
+  
+  var existingDisplay = this.nextElementSibling;
+  if (existingDisplay && existingDisplay.tagName === 'P') {
+    existingDisplay.remove();
+  }
+  
+  this.parentNode.insertBefore(fileNameDisplay, this.nextSibling);
+});
+</script>
 
 </body>
 
