@@ -302,10 +302,10 @@ if(isset($_SESSION['user_id'])) {
                             <input type="text" style="color: black;" class="form-control" id="question" name="question" required>
                           </div>
                           <div class="form-group">
-  <label for="itemType" style="color: black;">Item Type</label>
-  <input type="hidden" id="itemType" name="itemType" value="lost">
-  <p style="color: black;">Lost Item</p>
-</div>
+                            <label for="itemType" style="color: black;">Item Type</label>
+                            <input type="hidden" id="itemType" name="itemType" value="lost">
+                            <p style="color: black;">Lost Item</p>
+                          </div>
                           <div class="form-group">
                             <label for="imageInput"style="color: black;" >Upload Image</label>
                             <input type="file" style="color: black;" class="form-control-file" id="imageInput" name="imageInput">
@@ -326,36 +326,12 @@ if(isset($_SESSION['user_id'])) {
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <footer class="footer">
         <div class="container-fluid">
           <ul class="nav">
             <li class="nav-item">
               <a href="javascript:void(0)" class="nav-link">
                 UNION
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="javascript:void(0)" class="nav-link">
-                About Us
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="javascript:void(0)" class="nav-link">
-                Blog
               </a>
             </li>
           </ul>
