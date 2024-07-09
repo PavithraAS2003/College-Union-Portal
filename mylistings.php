@@ -192,6 +192,15 @@ if (mysqli_num_rows($lostItemsResult) > 0) {
         </div>
           <!-- Your existing buttons -->
         </div>
+        <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p id="notificationMessage"></p>
+      </div>
+    </div>
+  </div>
+</div>
         <!-- Card with headings -->
         <div class="card">
           <div class="card-header">
@@ -212,36 +221,39 @@ if (mysqli_num_rows($lostItemsResult) > 0) {
 
                   <!-- Fetch associated 'found' items (answers) -->
                   <?php
-                  $foundItemsQuery = "SELECT id, answer, status, user_id FROM lost_and_found WHERE item_type = 'found' AND question = '" . $lostItem['question'] . "'";
-                  $foundItemsResult = mysqli_query($con, $foundItemsQuery);
-                  $foundItems = mysqli_fetch_all($foundItemsResult, MYSQLI_ASSOC);
-                  ?>
+$foundItemsQuery = "SELECT lf.id, lf.answer, lf.status, lf.user_id, u.name AS user_name 
+                    FROM lost_and_found lf
+                    JOIN users u ON lf.user_id = u.id
+                    WHERE lf.item_type = 'found' AND lf.question = '" . $lostItem['question'] . "'";
+$foundItemsResult = mysqli_query($con, $foundItemsQuery);
+$foundItems = mysqli_fetch_all($foundItemsResult, MYSQLI_ASSOC);
+?>
 
-                  <?php if (!empty($foundItems)) : ?>
-                    <h6 class="mt-3">Answers:</h6>
-                    <ul class="list-group">
-                      <?php foreach ($foundItems as $foundItem) : ?>
-                        <li class="list-group-item">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <p class="mb-0" style="color: black;">Answer: <?php echo $foundItem['answer']; ?></p>
-                              <small>Submitted by User ID: <?php echo $foundItem['user_id']; ?></small>
-                            </div>
-                            <div>
-                              <?php if ($foundItem['status'] === 'pending') : ?>
-                                <a href="update_status.php?id=<?php echo $foundItem['id']; ?>&action=approve" class="btn btn-success btn-sm">Approve</a>
-                                <a href="update_status.php?id=<?php echo $foundItem['id']; ?>&action=reject" class="btn btn-danger btn-sm">Reject</a>
-                              <?php elseif ($foundItem['status'] === 'approved') : ?>
-                                <span class="badge badge-success">Approved</span>
-                              <?php elseif ($foundItem['status'] === 'rejected') : ?>
-                                <span class="badge badge-danger">Rejected</span>
-                              <?php endif; ?>
-                            </div>
-                          </div>
-                        </li>
-                      <?php endforeach; ?>
-                    </ul>
-                  <?php endif; ?>
+<?php if (!empty($foundItems)) : ?>
+  <h6 class="mt-3">Answers:</h6>
+  <ul class="list-group">
+    <?php foreach ($foundItems as $foundItem) : ?>
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <p class="mb-0" style="color: black;">Answer: <?php echo htmlspecialchars($foundItem['answer']); ?></p>
+            <small>Submitted by: <?php echo htmlspecialchars($foundItem['user_name']); ?></small>
+          </div>
+          <div>
+            <?php if ($foundItem['status'] === 'pending') : ?>
+              <a href="#" onclick="updateStatus(<?php echo $foundItem['id']; ?>, 'approve')" class="btn btn-success btn-sm">Approve</a>
+              <a href="#" onclick="updateStatus(<?php echo $foundItem['id']; ?>, 'reject')" class="btn btn-danger btn-sm">Reject</a>
+            <?php elseif ($foundItem['status'] === 'approved') : ?>
+              <span class="badge badge-success">Approved</span>
+            <?php elseif ($foundItem['status'] === 'rejected') : ?>
+              <span class="badge badge-danger">Rejected</span>
+            <?php endif; ?>
+          </div>
+        </div>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+<?php endif; ?>
                 </div>
               </div>
             <?php endforeach; ?>
@@ -346,6 +358,40 @@ if (mysqli_num_rows($lostItemsResult) > 0) {
   <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/black-dashboard.min.js?v=1.0.0"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
+  <script>
+function updateStatus(id, action) {
+  $.ajax({
+    url: 'update_status.php',
+    type: 'GET',
+    data: { id: id, action: action },
+    success: function(response) {
+      // Update the UI to reflect the new status
+      var listItem = $('a[onclick="updateStatus(' + id + ', \'' + action + '\')"]').closest('li');
+      listItem.find('.btn').remove();
+      
+      var badge = $('<span>').addClass('badge');
+      if (action === 'approve') {
+        badge.addClass('badge-success').text('Approved');
+      } else {
+        badge.addClass('badge-danger').text('Rejected');
+      }
+      listItem.find('.d-flex').append(badge);
+
+      // Show notification
+      $('#notificationMessage').text(response);
+      $('#notificationModal').modal('show');
+      
+      // Hide notification after 2 seconds
+      setTimeout(function() {
+        $('#notificationModal').modal('hide');
+      }, 2000);
+    },
+    error: function() {
+      alert('An error occurred. Please try again.');
+    }
+  });
+}
+</script>
   <script>
     $(document).ready(function() {
       $().ready(function() {
